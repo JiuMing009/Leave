@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hy.mapper.StudentMapper">
+
+   <!-- 全查-->
+    <select id="selectAll" resultType="com.hy.entity.Student">
+        select * from student
+    </select>
+   <!-- 添加-->
+    <insert id="addStudent">
+        insert into student(stuId,name,sex,grade,phone) values
+            (#{stuId},#{name},#{sex},#{grade},#{phone});
+    </insert>
+   <!-- 删除-->
+    <delete id="deleteStudent">
+        delete from student where id = #{id};
+    </delete>
+
+    <!--批量删除-->
+    <delete id="deleteById">
+        delete from student
+        <where>
+            <foreach collection="array" item="id" separator="or">
+                id =#{id}
+            </foreach>
+        </where>
+    </delete>
+
+
+    <!--登录  -->
+
+    <select id="loginCheck" resultType="com.hy.entity.Student">
+        select * from student where stuId =#{stuId} and password =#{password}
+    </select>
+
+    <!--回显-->
+    <select id="byStuId" resultType="com.hy.entity.Student">
+        select * from student where stuId =#{stuId}
+    </select>
+
+
+</mapper>

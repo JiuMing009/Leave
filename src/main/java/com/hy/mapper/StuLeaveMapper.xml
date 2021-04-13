@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hy.mapper.StuLeaveMapper">
+
+   <!-- 全查-->
+    <select id="selectAll" resultType="com.hy.entity.StuLeave">
+        select * from leave_tab
+    </select>
+   <!-- 添加-->
+    <insert id="addLeave">
+        insert into leave_tab (stuId,name,phone,address,cause,leavetime,teaId,tname) values
+            (#{stuId},#{name},#{phone},#{address},#{cause},#{leavetime},#{teaId},#{tname});
+    </insert>
+
+    <!-- 按老师id查 -->
+     <select id="selectTeaId" resultType="StuLeave">
+        select * from leave_tab where teaId=#{teaId} and status = 0
+    </select>
+
+    <!-- 按学生id查 -->
+    <select id="selectStuId" resultType="StuLeave">
+        select * from leave_tab where stuId=#{stuId} and status = 0
+    </select>
+
+   <!-- 删除-->
+    <delete id="cancel">
+        delete from leave_tab where id = #{id};
+    </delete>
+
+    <!-- 修改 ，同意-->
+    <update id="Agree">
+        update leave_tab set status= 1 where id =#{id};
+    </update>
+
+    <!-- 修改,不同意 -->
+    <update id="Disagree">
+        update leave_tab set status= 2 where id =#{id};
+    </update>
+
+    <!-- 按学生id查，已同意的 -->
+    <select id="AgreeStuId" resultType="StuLeave" >
+        select * from leave_tab where stuId=#{stuId} and status = 1
+    </select>
+
+    <!-- 按学生id查，已拒绝的 -->
+    <select id="DisagreeStuId" resultType="StuLeave">
+        select * from leave_tab where stuId=#{stuId} and status = 2
+    </select>
+
+    <!-- 删除,被拒绝的-->
+    <delete id="delete">
+        delete from leave_tab where id = #{id};
+    </delete>
+
+    <!-- 销假-->
+    <delete id="over">
+        delete from leave_tab where id = #{id};
+    </delete>
+
+    <!-- 按老师id查，已同意的 -->
+    <select id="AgreeTeaId" resultType="StuLeave">
+        select * from leave_tab where teaId=#{teaId} and status = 1
+    </select>
+
+    <!-- 按老师id查，已拒绝的 -->
+    <select id="DisagreeTeaId" resultType="StuLeave">
+        select * from leave_tab where teaId=#{teaId} and status = 2
+    </select>
+
+</mapper>
